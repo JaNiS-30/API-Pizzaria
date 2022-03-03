@@ -6,7 +6,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
-app.listen(3000, () => console.log('Servidor rodando'))
+app.listen(process.env.PORT || 3000, () => console.log('Servidor rodando'))
 
 app.get('/', (req, res) => {
 
