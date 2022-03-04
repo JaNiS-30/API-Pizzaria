@@ -70,8 +70,8 @@ app.patch('/pizzas/:id', (req, res) => {
     }
 })
 
-async function buscaEndereco(lat, long) {
-    let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyDuaVXhTDA7NTm5y-qxlhNiviOao2AjB3k`
+async function buscaEndereco(lat, long, key) {
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${key}`
     const resposta = await axios.get(url)
     return resposta.data;
 }
