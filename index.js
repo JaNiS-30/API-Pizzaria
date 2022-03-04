@@ -76,11 +76,12 @@ async function buscaEndereco(lat, long, key) {
     return resposta.data;
 }
 
-app.get('/endereco/:lat/:long', (req, res) => {
+app.get('/endereco/:lat/:long/:key', (req, res) => {
     let lat = req.params.lat
     let long = req.params.long
+    let key = req.params.key
 
-    buscaEndereco(lat, long).then((valor) => {
+    buscaEndereco(lat, long, key).then((valor) => {
         var address = {
             houseNumber: '',
             streetName: '',
