@@ -5,6 +5,10 @@ const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+const verificaFormato = (palavra, formato) => {
+    if (typeof palavra === formato) return true
+    return false
+}
 
 app.listen(process.env.PORT || 3000, () => console.log('Servidor rodando'))
 
@@ -16,9 +20,9 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
 
-    if (typeof req.body.nomePizza !== 'string') {
+    if (!verificaFormato(req.body.nomePizza, 'string')) {
         res.status(400).send(`O nome da pizza está no formato incorreto, por favor, digite letras`)
-    } else if (typeof req.body.valorPizza !== 'number') {
+    } else if (!verificaFormato(req.body.valorPizza, 'number')) {
         res.status(400).send(`O valor da pizza não é um número, por favor, digite números`)
     } else {
 
@@ -39,5 +43,30 @@ app.get('/:id', (req, res) => {
         res.status(400).send(`O id ${id} não corresponde a nenhuma pizza cadastrada`)
     } else {
         res.status(200).send(bancoDeDados[id])
+    }
+})
+
+app.delete('/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    if (bancoDeDados[id] == undefined) {
+        res.status(400).send(`O id ${id} não corresponde a nenhuma pizza cadastrada`)
+    } else {
+        bancoDeDados.splice(id, 1)
+        res.status(200).send(`A pizza ${id} foi deletada com sucesso`)
+    }
+})
+
+app.patch('/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    
+    if (bancoDeDados[id] == undefined) {
+        res.status(400).send(`O id ${id} não corresponde a nenhuma pizza cadastrada`)
+    } else {
+        if (verificaFormato(req.body.nomePizza, 'string') && verificaFormato(req.body.valorPizza, 'number')) {
+            bancoDeDados[id].nomePizza = req.body.nomePizza
+            bancoDeDados[id].valorPizza = req.body.valorPizza
+        } else res.status(400).send(`Há um erro nos valores de entrada, digite letras para a pizza e números para o preço`)
+        
+        res.status(200).send(`A pizza ${bancoDeDados[id].nomePizza} foi alterada com sucesso`)
     }
 })
