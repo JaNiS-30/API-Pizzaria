@@ -6,9 +6,10 @@ const bancoDeDados = [
         "nomePizza": "Pizza de Mussarela",
         "valorPizza": 45
     }, {
-        "nomePizza": "Pizza de Portuguesa",
+        "nomePizza": "Pizza Portuguesa",
         "valorPizza": 40
     }
 ]
+
 
 module.exports = bancoDeDados
