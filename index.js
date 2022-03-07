@@ -1,8 +1,7 @@
 const express = require('express')
-const bancoDeDados = require('./bancoDeDados')
+const bancoDeDados = require('./bancoDeDados.js')
 const Funcoes = require('./functions')
 const axios = require('axios')
-const { response } = require('express')
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
@@ -11,9 +10,10 @@ app.use(express.json())
 
 app.listen(process.env.PORT || 3000, () => console.log('Servidor rodando'))
 
-app.get('/pizzas', (req, res) => {
+app.get('/pizzas', async (req, res) => {
 
-    res.status(200).send(bancoDeDados)
+    let resultado = await bancoDeDados.buscaPizzas()
+    res.status(200).send(resultado)
 
 })
 
@@ -26,47 +26,61 @@ app.post('/pizzas', (req, res) => {
     } else {
 
         const dados = {
-            "Nome Pizza": req.body.nomePizza,
-            "Valor": req.body.valorPizza
+            "nomePizza": req.body.nomePizza,
+            "valorPizza": req.body.valorPizza
         }
 
-        bancoDeDados.push(dados)
+        bancoDeDados.adicionaPizza(dados)
 
         res.status(201).send(`${req.body.nomePizza} incluído com sucesso`)
     }
 })
 
-app.get('/pizzas/:id', (req, res) => {
+app.get('/pizzas/:id', async (req, res) => {
     const id = parseInt(req.params.id)
-    if (bancoDeDados[id] == undefined) {
+    
+    let verificacao = await bancoDeDados.verificaPizza(id)
+    let resultado = await bancoDeDados.buscaUmaPizza(id)
+
+    if (verificacao == false) {
         res.status(400).send(`O id ${id} não corresponde a nenhuma pizza cadastrada`)
     } else {
-        res.status(200).send(bancoDeDados[id])
+        res.status(200).send(resultado)
     }
 })
 
-app.delete('/pizzas/:id', (req, res) => {
+app.delete('/pizzas/:id', async (req, res) => {
     const id = parseInt(req.params.id)
-    if (bancoDeDados[id] == undefined) {
+
+    let verificacao = await bancoDeDados.verificaPizza(id)
+
+    if (verificacao == false) {
         res.status(400).send(`O id ${id} não corresponde a nenhuma pizza cadastrada`)
     } else {
-        bancoDeDados.splice(id, 1)
+        await bancoDeDados.removePizza(id)
         res.status(200).send(`A pizza ${id} foi deletada com sucesso`)
     }
 })
 
-app.patch('/pizzas/:id', (req, res) => {
+app.patch('/pizzas/:id', async (req, res) => {
     const id = parseInt(req.params.id)
 
-    if (bancoDeDados[id] == undefined) {
+    let verificacao = await bancoDeDados.verificaPizza(id)
+
+    if (verificacao == false) {
         res.status(400).send(`O id ${id} não corresponde a nenhuma pizza cadastrada`)
     } else {
         if (Funcoes.verificaFormato(req.body.nomePizza, 'string') && Funcoes.verificaFormato(req.body.valorPizza, 'number')) {
-            bancoDeDados[id].nomePizza = req.body.nomePizza
-            bancoDeDados[id].valorPizza = req.body.valorPizza
-        } else res.status(400).send(`Há um erro nos valores de entrada, digite letras para a pizza e números para o preço`)
+            resultado = await bancoDeDados.buscaUmaPizza(id)
+            
+            resultado.nomePizza = req.body.nomePizza
+            resultado.valorPizza = req.body.valorPizza
 
-        res.status(200).send(`A pizza ${bancoDeDados[id].nomePizza} foi alterada com sucesso`)
+            await bancoDeDados.alteraPizza(id, resultado.nomePizza, resultado.valorPizza)
+
+            res.status(200).send(`A pizza ${resultado.nomePizza} foi alterada com sucesso`)
+
+        } else res.status(400).send(`Há um erro nos valores de entrada, digite letras para a pizza e números para o preço`)
     }
 })
 
