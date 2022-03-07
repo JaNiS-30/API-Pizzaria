@@ -37,7 +37,7 @@ app.post('/pizzas', (req, res) => {
 })
 
 app.get('/pizzas/:id', async (req, res) => {
-    const id = parseInt(req.params.id)
+    const id = parseInt(req.params.id - 1)
     
     let verificacao = await bancoDeDados.verificaPizza(id)
     let resultado = await bancoDeDados.buscaUmaPizza(id)
@@ -50,7 +50,7 @@ app.get('/pizzas/:id', async (req, res) => {
 })
 
 app.delete('/pizzas/:id', async (req, res) => {
-    const id = parseInt(req.params.id)
+    const id = parseInt(req.params.id - 1)
 
     let verificacao = await bancoDeDados.verificaPizza(id)
 
@@ -63,7 +63,7 @@ app.delete('/pizzas/:id', async (req, res) => {
 })
 
 app.patch('/pizzas/:id', async (req, res) => {
-    const id = parseInt(req.params.id)
+    const id = parseInt(req.params.id - 1)
 
     let verificacao = await bancoDeDados.verificaPizza(id)
 
