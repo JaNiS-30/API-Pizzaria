@@ -43,7 +43,7 @@ app.get('/pizzas/:id', async (req, res) => {
     let resultado = await bancoDeDados.buscaUmaPizza(id)
 
     if (verificacao == false) {
-        res.status(400).send(`O id ${id} não corresponde a nenhuma pizza cadastrada`)
+        res.status(400).send(`O id ${id + 1} não corresponde a nenhuma pizza cadastrada`)
     } else {
         res.status(200).send(resultado)
     }
@@ -55,10 +55,10 @@ app.delete('/pizzas/:id', async (req, res) => {
     let verificacao = await bancoDeDados.verificaPizza(id)
 
     if (verificacao == false) {
-        res.status(400).send(`O id ${id} não corresponde a nenhuma pizza cadastrada`)
+        res.status(400).send(`O id ${id + 1} não corresponde a nenhuma pizza cadastrada`)
     } else {
         await bancoDeDados.removePizza(id)
-        res.status(200).send(`A pizza ${id} foi deletada com sucesso`)
+        res.status(200).send(`A pizza ${id + 1} foi deletada com sucesso`)
     }
 })
 
@@ -68,7 +68,7 @@ app.patch('/pizzas/:id', async (req, res) => {
     let verificacao = await bancoDeDados.verificaPizza(id)
 
     if (verificacao == false) {
-        res.status(400).send(`O id ${id} não corresponde a nenhuma pizza cadastrada`)
+        res.status(400).send(`O id ${id+ 1} não corresponde a nenhuma pizza cadastrada`)
     } else {
         if (Funcoes.verificaFormato(req.body.nomePizza, 'string') && Funcoes.verificaFormato(req.body.valorPizza, 'number')) {
             resultado = await bancoDeDados.buscaUmaPizza(id)
