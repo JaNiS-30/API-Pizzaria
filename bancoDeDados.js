@@ -7,14 +7,14 @@ module.exports = {
     },
     async adicionaPizza(pizza) {
         let resultado = await this.buscaPizzas()
-        resultado.push(pizza)
+        resultado.pizzas.push(pizza)
         await fs.writeFileSync("./bancoDeDados.json", JSON.stringify(resultado))
     },
     async verificaPizza(id){
         let resultado = await fs.readFileSync("./bancoDeDados.json", { encoding: "utf-8" })
         resultado = JSON.parse(resultado)
 
-        if (resultado[id] == undefined) return false
+        if (resultado.pizzas[id] == undefined) return false
 
         return true
     },
@@ -22,19 +22,19 @@ module.exports = {
         let resultado = await fs.readFileSync("./bancoDeDados.json", { encoding: "utf-8" })
         resultado = JSON.parse(resultado)
 
-        return resultado[id]
+        return resultado.pizzas[id]
     },
     async removePizza(id){
         let resultado = await this.buscaPizzas()
-        resultado.splice(id,1)
+        resultado.pizzas.splice(id,1)
         await fs.writeFileSync("./bancoDeDados.json", JSON.stringify(resultado))
     },
     async alteraPizza(id, nomePizza, valorPizza){
         let resultado = await fs.readFileSync("./bancoDeDados.json", { encoding: "utf-8" })
         resultado = JSON.parse(resultado)
 
-        resultado[id].nomePizza = nomePizza
-        resultado[id].valorPizza = valorPizza
+        resultado.pizzas[id].nomePizza = nomePizza
+        resultado.pizzas[id].valorPizza = valorPizza
 
         await fs.writeFileSync("./bancoDeDados.json", JSON.stringify(resultado))
     }

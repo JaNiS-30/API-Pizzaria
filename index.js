@@ -13,7 +13,7 @@ app.listen(process.env.PORT || 3000, () => console.log('Servidor rodando'))
 app.get('/pizzas', async (req, res) => {
 
     let resultado = await bancoDeDados.buscaPizzas()
-    res.status(200).send(resultado)
+    res.status(200).send(resultado.pizzas)
 
 })
 

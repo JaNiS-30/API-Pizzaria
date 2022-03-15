@@ -1,1 +1,50 @@
-[{"nomePizza":"Pizza de Calabresa","valorPizza":40},{"nomePizza":"Pizza de Catupiry","valorPizza":40},{"nomePizza":"Pizza de Frango","valorPizza":45}]
+{
+    "pizzas": [
+        {
+            "nomePizza": "Pizza de Calabresa",
+            "valorPizza": 40
+        },
+        {
+            "nomePizza": "Pizza de Catupiry",
+            "valorPizza": 40
+        },
+        {
+            "nomePizza": "Pizza de Frango",
+            "valorPizza": 35
+        },
+        {
+            "nomePizza": "Pizza de Muçarela",
+            "valorPizza": 30
+        },
+        {
+            "nomePizza": "Pizza de Quatro Queijos",
+            "valorPizza": 40
+        },
+        {
+            "nomePizza": "Pizza Portuguesa",
+            "valorPizza": 35
+        },
+        {
+            "nomePizza": "Pizza de Chocolate",
+            "valorPizza": 35
+        },
+        {
+            "nomePizza": "Pizza de Brigadeiro",
+            "valorPizza": 40
+        },
+        {
+            "nomePizza": "Pizza de Sorvete",
+            "valorPizza": 40
+        },
+        {
+            "nomePizza": "Pizza Califórnia",
+            "valorPizza": 45
+        }
+    ],
+    "pedidos": [
+        {
+            "usuario": "123",
+            "pedido": "Pizza de Calabresa"
+        }
+    ]
+}
