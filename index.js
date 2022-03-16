@@ -17,6 +17,14 @@ app.get('/pizzas', async (req, res) => {
 
 })
 
+app.get('/pizzas/:pg', async (req, res) => {
+
+    const pg = parseInt(req.params.pg)
+
+    let resultado = await bancoDeDados.buscaPizzaPorPagina(pg)
+    res.status(200).send(resultado)
+})
+
 app.post('/pizzas', (req, res) => {
 
     if (!Funcoes.verificaFormato(req.body.nomePizza, 'string')) {

@@ -1,9 +1,25 @@
+const res = require('express/lib/response');
 const fs = require('fs');
 
 module.exports = {
     async buscaPizzas() {
         let resultado = await fs.readFileSync("./bancoDeDados.json", { encoding: "utf-8" })
         return JSON.parse(resultado)
+    },
+    async buscaPizzaPorPagina(pg){
+        let resultado = await fs.readFileSync("./bancoDeDados.json", { encoding: "utf-8" })
+        resultado = JSON.parse(resultado)
+
+        let inicio = 5 * pg
+        let resposta = []
+
+        if (resultado.pizzas[inicio] == null) return `A página ${pg} não tem nenhuma pizza cadastrada`
+
+        for (let i = inicio; i < inicio + 5; i++){
+            resposta.push(resultado.pizzas[i]) 
+        }
+
+        return resposta
     },
     async adicionaPizza(pizza) {
         let resultado = await this.buscaPizzas()
