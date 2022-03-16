@@ -17,7 +17,7 @@ app.get('/pizzas', async (req, res) => {
 
 })
 
-app.get('/pizzas/:pg', async (req, res) => {
+app.get('/pizzas/pagina/:pg', async (req, res) => {
 
     const pg = parseInt(req.params.pg)
 
