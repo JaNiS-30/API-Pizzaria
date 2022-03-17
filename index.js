@@ -113,10 +113,16 @@ app.get('/endereco/:lat/:long/:key', (req, res) => {
         }
 
         if (valor.results[0].address_components[0].types[0] === 'street_number') address.houseNumber = valor.results[0].address_components[0].long_name
+        else address.houseNumber = valor.results[1].address_components[0].long_name
         if (valor.results[0].address_components[1].types[0] === 'route') address.streetName = valor.results[0].address_components[1].long_name
+        else address.streetName = valor.results[1].address_components[1].long_name
         if (valor.results[0].address_components[2].types[2] === 'sublocality_level_1') address.districtName = valor.results[0].address_components[2].long_name
+        else address.districtName = valor.results[1].address_components[2].long_name
         if (valor.results[0].address_components[3].types[0] === 'administrative_area_level_2') address.cityName = valor.results[0].address_components[3].long_name
+        else address.cityName = valor.results[1].address_components[3].long_name
         if (valor.results[0].address_components[4].types[0] === 'administrative_area_level_1') address.countryName = valor.results[0].address_components[4].long_name
+        else address.countryName = valor.results[1].address_components[4].long_name
+        
         res.send(address)
     })
 
