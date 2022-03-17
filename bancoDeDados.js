@@ -53,5 +53,14 @@ module.exports = {
         resultado.pizzas[id].valorPizza = valorPizza
 
         await fs.writeFileSync("./bancoDeDados.json", JSON.stringify(resultado))
+    },
+    async buscaPedidos() {
+        let resultado = await fs.readFileSync("./bancoDeDados.json", { encoding: "utf-8" })
+        return JSON.parse(resultado)
+    },
+    async adicionaPedido(pedido) {
+        let resultado = await this.buscaPedidos()
+        resultado.pedidos.push(pedido)
+        await fs.writeFileSync("./bancoDeDados.json", JSON.stringify(resultado))
     }
 };

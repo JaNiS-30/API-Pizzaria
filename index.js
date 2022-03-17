@@ -46,7 +46,7 @@ app.post('/pizzas', (req, res) => {
 
 app.get('/pizzas/:id', async (req, res) => {
     const id = parseInt(req.params.id - 1)
-    
+
     let verificacao = await bancoDeDados.verificaPizza(id)
     let resultado = await bancoDeDados.buscaUmaPizza(id)
 
@@ -76,11 +76,11 @@ app.patch('/pizzas/:id', async (req, res) => {
     let verificacao = await bancoDeDados.verificaPizza(id)
 
     if (verificacao == false) {
-        res.status(400).send(`O id ${id+ 1} não corresponde a nenhuma pizza cadastrada`)
+        res.status(400).send(`O id ${id + 1} não corresponde a nenhuma pizza cadastrada`)
     } else {
         if (Funcoes.verificaFormato(req.body.nomePizza, 'string') && Funcoes.verificaFormato(req.body.valorPizza, 'number')) {
             resultado = await bancoDeDados.buscaUmaPizza(id)
-            
+
             resultado.nomePizza = req.body.nomePizza
             resultado.valorPizza = req.body.valorPizza
 
@@ -120,4 +120,29 @@ app.get('/endereco/:lat/:long/:key', (req, res) => {
         res.send(address)
     })
 
+})
+
+app.get('/pedidos', async (req, res) => {
+
+    let resultado = await bancoDeDados.buscaPedidos()
+    res.status(200).send(resultado.pedidos)
+
+})
+
+app.post('/pedidos', (req, res) => {
+
+    const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]
+
+    const pedidoCompleto = {
+        "nome": req.body.nome,
+        "telefone": req.body.telefone,
+        "pedido": req.body.pedido,
+        "valor": req.body.valor,
+        "dia": new Date().getDate('CET, UTC-03:00') + " de " + meses[new Date().getMonth('CET, UTC-03:00')] + " de " + new Date().getFullYear('CET, UTC-03:00'),
+        "hora": new Date().getHours('CET, UTC-03:00') + ":" + new Date().getMinutes('CET, UTC-03:00')
+    }
+
+    bancoDeDados.adicionaPedido(pedidoCompleto)
+
+    res.status(201).send(`Pedido incluído com sucesso`)
 })

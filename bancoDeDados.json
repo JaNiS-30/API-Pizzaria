@@ -43,8 +43,12 @@
     ],
     "pedidos": [
         {
-            "usuario": "123",
-            "pedido": "Pizza de Calabresa"
+            "nome": "Jeferson",
+            "telefone": "999453215",
+            "pedido": "Pizza de Frango",
+            "valor": 35,
+            "dia": "17 de Março de 2022",
+            "hora": "15:49"
         }
     ]
 }
