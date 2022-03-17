@@ -122,7 +122,7 @@ app.get('/endereco/:lat/:long/:key', (req, res) => {
         else address.cityName = valor.results[1].address_components[3].long_name
         if (valor.results[0].address_components[4].types[0] === 'administrative_area_level_1') address.countryName = valor.results[0].address_components[4].long_name
         else address.countryName = valor.results[1].address_components[4].long_name
-        
+
         res.send(address)
     })
 
@@ -144,8 +144,8 @@ app.post('/pedidos', (req, res) => {
         "telefone": req.body.telefone,
         "pedido": req.body.pedido,
         "valor": req.body.valor,
-        "dia": new Date().getDate('CET, UTC-03:00') + " de " + meses[new Date().getMonth('CET, UTC-03:00')] + " de " + new Date().getFullYear('CET, UTC-03:00'),
-        "hora": new Date().getHours('CET, UTC-03:00') + ":" + new Date().getMinutes('CET, UTC-03:00')
+        "dia": new Date().getDate() + " de " + meses[new Date().getMonth()] + " de " + new Date().getFullYear(),
+        "hora": new Date().getHours() + ":" + new Date().getMinutes()
     }
 
     bancoDeDados.adicionaPedido(pedidoCompleto)
