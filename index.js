@@ -145,7 +145,7 @@ app.post('/pedidos', (req, res) => {
         "pedido": req.body.pedido,
         "valor": req.body.valor,
         "dia": new Date().getDate() + " de " + meses[new Date().getMonth()] + " de " + new Date().getFullYear(),
-        "hora": new Date().getHours() + ":" + new Date().getMinutes()
+        //"hora": new Date().getHours() + ":" + new Date().getMinutes()
     }
 
     bancoDeDados.adicionaPedido(pedidoCompleto)
