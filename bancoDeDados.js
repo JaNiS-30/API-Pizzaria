@@ -12,12 +12,12 @@ module.exports = {
 
         let inicio = 5 * pg
         let resposta = []
-
+        
         if (resultado.pizzas[inicio] == null) return `A página ${pg} não tem nenhuma pizza cadastrada`
 
-        for (let i = inicio; i < inicio + 5; i++){
-            resposta.push(resultado.pizzas[i]) 
-        }
+        resultado.forEach((indice) => {
+            if (resultado[indice] != null) resposta.push(resultado[indice])
+        })
 
         return resposta
     },
