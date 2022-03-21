@@ -15,9 +15,9 @@ module.exports = {
         
         if (resultado.pizzas[inicio] == null) return `A página ${pg} não tem nenhuma pizza cadastrada`
 
-        resultado.forEach((indice) => {
-            if (resultado[indice] != null) resposta.push(resultado[indice])
-        })
+        for (let i = inicio; i < inicio + 5; i++){
+            if (resultado.pizzas[i] != null) resposta.push(resultado.pizzas[i])
+        }
 
         return resposta
     },
